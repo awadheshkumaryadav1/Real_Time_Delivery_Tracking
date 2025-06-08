@@ -1,0 +1,45 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delivery Tracker</title>
+     <link rel="stylesheet" href="{% static 'tracker/style.css' %}">
+</head>
+<body>
+    <h1>Delivery List</h1>
+
+    <form method="get" action=".">
+        <input type="text" name="q" placeholder="Search by customer name" value="{{ request.GET.q }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Order ID</th>
+                <th>Status</th>
+                <th>Address</th>
+                <th>Updated At</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for delivery in deliveries %}
+            <tr>
+                <td>{{ delivery.customer_name }}</td>
+                <td>{{ delivery.order_id }}</td>
+                <td>{{ delivery.get_status_display }}</td>
+                <td>{{ delivery.address }}</td>
+                <td>{{ delivery.updated_at }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No deliveries found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
